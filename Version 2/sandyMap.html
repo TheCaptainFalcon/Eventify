@@ -11,11 +11,27 @@
      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
      <!-- MDB core JavaScript -->
      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.12.0/js/mdb.min.js"></script>
- 
- 
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
   </head>
 
   <body>
+
+    <!-- Navbar with button navs -->
+    <nav class="navbar navbar-expand-xl-6 navbar-light bg-primary">
+
+      <img src= "images/calendar.png">
+      <a class="navbar-brand" href="#">Eventify</a>
+      <a class="navbar-brand" href="home.html">Home</a>
+      <a class="navbar-brand" href="home.html">About</a>
+  
+    </nav>
+
+    <button onclick = "history.back();">Click Here to go Back</button>
     <p id="location"></p>
     <div id="map"></div>
     <div id="events"></div>
@@ -27,25 +43,25 @@ function showPosition(position) {
     const latlon = 33.935101 + "," + -84.360924;
 
 // set max radius to 30 miles of given coords
-        $.ajax({
-          type:"GET",
-          url:"https://app.ticketmaster.com/discovery/v2/events.json?radius=30&unit=miles&apikey=0AM5PnXd9P80gcqkQlWul8ARQYY1GIAY&latlong="+latlon,
-          async:true,
-          dataType: "json",
-          success: function(json) {
-                      console.log(json);
-                      var e = document.getElementById("events");
-                    //   shows how many events total NEEDS FEX
-                      e.innerHTML = json.page.totalElements + " events found.";
-                      showEvents(json);
-                      initMap(position, json);
-                   },
-          error: function(xhr, status, err) {
-                      console.log(err);
-                   }
-        });
-        
-    }
+  $.ajax({
+    type:"GET",
+    url:"https://app.ticketmaster.com/discovery/v2/events.json?radius=30&unit=miles&apikey=0AM5PnXd9P80gcqkQlWul8ARQYY1GIAY&latlong="+latlon,
+    async:true,
+    dataType: "json",
+    success: function(json) {
+      console.log(json);
+      var e = document.getElementById("events");
+  
+      e.innerHTML = json.page.totalElements + " events found.";
+      showEvents(json);
+      initMap(position, json);
+      },
+      error: function(xhr, status, err) {
+        console.log(err);
+      }
+  });
+  
+}
     
     function showEvents(json) {
       for(let i=0; i<json.page.size; i++) {
@@ -53,7 +69,6 @@ function showPosition(position) {
       }
     }
 
-    
     function initMap(position, json) {
       let mapDiv = document.getElementById('map');
       let map = new google.maps.Map(mapDiv, {
@@ -66,7 +81,7 @@ function showPosition(position) {
     }
     
     function addMarker(map, event) {
-      let contentString = "asd"//$('#classification').html(eventObject.data[""]);  -- add this when combining into events page to call
+      let contentString = "An Event Occurs Here!"//$('#classification').html(eventObject.data[""]);  -- add this when combining into events page to call
       let infoWindow = new google.maps.InfoWindow({
           content : contentString
       });  
@@ -82,15 +97,12 @@ function showPosition(position) {
 
     showPosition();
 
-
     </script>
 
     <!-- for security purposes - removed unique API KEY  -->
     <!-- if you do not have an API key use the API code below -->
   
-    <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=
-    <insert key here>
-    "></script> -->
+    <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<KEY HERE>"></script> -->
 
     <!-- for dev purposes, use old v2 API -->
     <script src="https://maps.googleapis.com/maps/api/js" async defer></script>
