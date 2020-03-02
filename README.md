@@ -2,4 +2,4 @@
 
 This is the original template used for brainstorming.
 
-See Version 2 for the updated files in progress..
+See Version 3 for the final product.
